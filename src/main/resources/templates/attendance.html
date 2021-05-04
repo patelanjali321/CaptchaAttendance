@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:insert="fragments/general.html :: headerfiles(title='List User')"> </head>
+<body>
+<div align="center">	
+	<header th:insert="fragments/general.html :: header(title='List User')"> </header>
+	
+	<h1>List User</h1>
+	<br/><br/>
+	<table border="1" cellpadding="10">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th th:each="time : ${#strings.arraySplit(@environment.getProperty('lectureTime'),',')}" th:text="${time}">Time</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="user: ${attendance.userPresent}">
+				<td th:text="${user.key.name}">Name</td>
+				<td th:each="time,iter : ${#strings.arraySplit(@environment.getProperty('lectureTime'),',')}" 
+					th:text="${#strings.toString(user.value.get(iter.index+1))>=@environment.getProperty('threshhold')? 'Present':'Absent'}">Attendance</td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<footer th:insert="fragments/general.html :: footer"> </footer>
+</div>
+</body>
+</html>

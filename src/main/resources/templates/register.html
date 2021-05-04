@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:insert="fragments/general.html :: headerfiles(title='List User')"> </head>
+<body>
+	<div align="center">	
+		<header th:insert="fragments/general.html :: header"> </header>
+		<h1>Register User</h1>
+		<br/>
+		<div th:if= "${results != ''}" th:text="${result}"></div>
+		<form action="#" th:action="@{/registerPage}" method="post">
+			<table border="0" cellpadding="10">
+				<tr>
+					<td>User Name:</td>
+					<td><input type="text" name="username" /></td>
+				</tr>
+				<tr>
+					<td>Name:</td>
+					<td><input type="text" name="name" /></td>
+				</tr>				
+				<tr>
+					<td>Password:</td>
+					<td><input type="text" name="password" /></td>
+				</tr>				
+				<tr>
+					<td>Enrolled On:</td>
+					<td><input type="date" name="enrolledon" /></td>
+				</tr>
+				<tr sec:authorize="hasRole('ROLE_ADMIN')">
+					<td><input type="checkbox" name="faculty" /></td>
+					<td>Faculty:</td>
+				</tr>			
+				<tr>
+					<td colspan="2"><button type="submit">Register</button></td>
+				</tr>
+			</table>
+		</form>
+		
+		<footer th:insert="fragments/general.html :: footer"> </footer>
+	</div>
+</body>
+</html>

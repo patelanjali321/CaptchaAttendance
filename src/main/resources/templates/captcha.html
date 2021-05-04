@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:insert="fragments/general.html :: headerfiles(title='Captcha')"> </head>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<body>
+<div align="center">	
+	<header th:insert="fragments/general.html :: header(title='List User')"> </header>
+	
+	<h1>Capture Captcha</h1>
+	<br/><br/>
+	<form action="#" th:action="@{/captchaPage}" method="post" th:if="${nextCaptcha == null}">
+      <div class="g-recaptcha" th:attr="data-sitekey=${@environment.getProperty('google.captcha.sitekey')}"></div>
+      <br/>
+      <input type="submit" value="Submit">
+    </form>
+    <div th:if="${nextCaptcha != null}" >
+    	Wait for next Captcha....  <span id="timer">00:00<span> minutes!
+		<script th:inline="javascript">
+    		var milSec = /*[[${@environment.getProperty('nextCaptcha')}]]*/ "";
+	    	var minute = Math.floor(milSec/(1000*60));
+	    	  var sec = (milSec/1000)%60;
+	    	  setInterval(function() {
+	    	    document.getElementById("timer").innerHTML = minute + " : " + sec;
+	    	    sec--;
+	    	    if (sec == 00) {
+	    	      minute --;
+	    	      sec = 60;
+	    	      if (minute == 0) {
+	    	        minute = 5;
+	    	      }
+	    	    }
+	    	  }, 1000);
+    	
+			setTimeout(function(){
+				window.location = window.location.href;
+				}, /*[[${@environment.getProperty('nextCaptcha')}]]*/ "");
+		</script>
+    </div>
+	<footer th:insert="fragments/general.html :: footer"> </footer>
+</div>
+</body>
+</html>

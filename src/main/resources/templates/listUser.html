@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:insert="fragments/general.html :: headerfiles(title='List User')"> </head>
+<body>
+<div align="center">	
+	<header th:insert="fragments/general.html :: header(title='List User')"> </header>
+	
+	<h1>List User</h1>
+	<br/><br/>
+	<table border="1" cellpadding="10">
+		<thead>
+			<tr>
+				<th>Username</th>
+				<th>Name</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="user : ${users}">
+				<td th:text="${user.username}">Username</td>
+				<td th:text="${user.name}">Name</td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<footer th:insert="fragments/general.html :: footer"> </footer>
+</div>
+</body>
+</html>
